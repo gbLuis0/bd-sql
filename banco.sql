@@ -65,5 +65,27 @@ VALUES
 (9, 235, 4, 1350),
 (10, 123, 5, 1450),
 (11, 567, 2, 1000);
-show tables;
-desc Conta;
+
+/*Nome das agências*/
+SELECT nome
+FROM Agencia;
+
+/*Nome dos clientes da agência iha do amor*/
+SELECT nome
+FROM Cliente
+WHERE cidade="São Luís";
+
+/*Mostrar número da conta e cpf das contas com saldo > 2000*/
+SELECT num_conta, cpf_cliente
+FROM Conta
+WHERE saldo > 2000;
+
+/*Mostrar saldo das contas da agência Cidade Luz*/
+SELECT saldo
+FROM Conta
+WHERE num_agencia = 1;
+
+/*Mostrar cpf dos clientes da cidade Teresina*/
+SELECT cpf_cliente
+FROM Cliente
+Where cidade = "Teresina";
