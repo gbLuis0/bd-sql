@@ -5,6 +5,7 @@ CREATE TABLE Aviao(
 	id_aviao INT,
     marca VARCHAR(45),
     nome VARCHAR(45),
+    CONSTRAINT pk_id_aviao PRIMARY KEY(id_aviao),
     CONSTRAINT fk_marca FOREIGN KEY(marca)
 		REFERENCES Marca (marca)
 		ON UPDATE CASCADE ON DELETE CASCADE
@@ -34,14 +35,10 @@ CREATE TABLE Voo(
     origem VARCHAR(45) NOT NULL,
     destino VARCHAR(45) NOT NULL,
     CONSTRAINT pk_num_voo PRIMARY KEY(num_voo),
-    
-    CONSTRAINT fk_Nome_piloto FOREIGN KEY(nome_piloto)
-		REFERENCES Piloto(nome_piloto)
-		ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_Id_aviao FOREIGN KEY(id_aviao)
-		REFERENCES Aviao(id_aviao)
-		ON UPDATE CASCADE ON DELETE CASCADE
+    CONSTRAINT fk_Nome_piloto FOREIGN KEY (nome_piloto) REFERENCES Piloto(nome_piloto) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_Id_aviao FOREIGN KEY (id_aviao) REFERENCES Aviao(id_aviao) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 
 INSERT INTO Marca
 (marca, lugares, autonomia)
@@ -61,7 +58,7 @@ VALUES
 (5, 'PPT-TD', 'Boeing 737-500'),
 (3, 'PPT-FR', 'Boeing 737-300'),
 (40, 'PPT-XJ', 'Airbus 300'),
-(32, 'PPT-AM', 'Airbus200');
+(32, 'PPT-AM', 'Airbus 200');
 
 INSERT INTO Piloto
 (nome_piloto, endereco, local, idade)
@@ -78,8 +75,7 @@ VALUES
 INSERT INTO Voo
 (num_voo, id_aviao, datav, hora, origem, destino, nome_piloto)
 VALUES
-(100, 15, ‘2002-12-15’, '08:00:00', 'SDU', 'CGH', 'Pedro'),
-(100, 15, '15/12/2002', '08:00:00', 'SDU', 'CGH', 'Pedro'),
+(100, 15, '2002-12-15', '08:00:00', 'SDU', 'CGH', 'Pedro'),
 (101, 12, '16/12/2002', '09:00:00', 'SDU', 'CGH', 'Pedro'),
 (102, 5, '16/12/2002', '10:05:00', 'SDU', 'BSB', 'Inacio'),
 (103, 12, '16/12/2002', '11:00:00', 'CGH', 'SDU', 'Pedro'),
@@ -98,6 +94,24 @@ VALUES
 (311, 5, '2002-12-17', '11:03:00', 'POA', 'SDU', 'Inacio');
 
 
-
 SELECT id_aviao from Aviao, Marca
 WHERE Marca.autonomia > 7500;
+
+/*questão 6*/
+SELECT COUNT(*)
+FROM Marca;
+
+/*questão 7*/
+SELECT distinct marca
+from aviao inner join voo on aviao.id_aviao = voo.id_aviao
+where origem = 'SDU'; 
+
+/*questão 8*/
+SELECT DISTINCT nome_piloto
+FROM voo inner join aviao on voo.id_aviao = aviao.id_aviao
+WHERE nome = 'PPT-AS';
+
+/*questão 9*/
+SELECT DISTINCT origem
+FROM voo inner join aviao on voo.id_aviao = aviao.id_aviao
+WHERE marca like 'Boeing 737%';
