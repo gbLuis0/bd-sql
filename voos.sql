@@ -39,7 +39,6 @@ CREATE TABLE Voo(
     CONSTRAINT fk_Id_aviao FOREIGN KEY (id_aviao) REFERENCES Aviao(id_aviao) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-
 INSERT INTO Marca
 (marca, lugares, autonomia)
 VALUES 
@@ -93,9 +92,11 @@ VALUES
 (402, 20, '20/12/2002', '09:12:00', 'SDU', 'POA', 'Inacio'),
 (311, 5, '2002-12-17', '11:03:00', 'POA', 'SDU', 'Inacio');
 
-
-SELECT id_aviao from Aviao, Marca
-WHERE Marca.autonomia > 7500;
+/*questão 5*/
+SELECT voo.id_aviao, aviao.nome, voo.data, voo.origemm, COUNT(*) as qtd_voos
+FROM voo join aviao on voo.id_aviao = aviao.id_aviao
+group by voo.id_aviao, voo.data, voo.origem
+HAVING COUNT(*) > 1;
 
 /*questão 6*/
 SELECT COUNT(*)
